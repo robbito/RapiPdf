@@ -16,7 +16,7 @@ let rowLinesOnlyTableLayout= {
 	paddingBottom: function(i, node) { return 0; },
 };
 
-export function getTypeInfo(schema, overrideAttributes=null){
+export function getTypeInfo(schema, overrideAttributes=null, skipType = false){
   if (!schema){
     return;
   }
@@ -101,9 +101,9 @@ export function getTypeInfo(schema, overrideAttributes=null){
   }
 
   // ${returnObj.readOnly}${returnObj.writeOnly}${returnObj.deprecated}\u00a0
-  let html = `${returnObj.type}`;
+  let html = skipType ? '' : `${returnObj.type}: `;
   if (returnObj.allowedValues){
-    html = html + `:(${returnObj.allowedValues})`;
+    html = html + `(${returnObj.allowedValues})`;
   }
   if (returnObj.readOnly){
     html = html + `read-only`;
@@ -287,8 +287,11 @@ export function schemaToPdf (schema, obj=[], name) {
   else {
     obj = [ 
       {text:name,style:['small', 'mono'],margin:0},
-      {text:(schema.type ? schema.type:''), style:['small', 'mono'],margin:0},
-      {text:(schema.description?schema.description:''), style:['small'],margin:[0,2,0,0]}
+      {stack: [
+          {text:(schema.type ? schema.type:''), style:['small', 'mono'],margin:0},
+          {text: getTypeInfo(schema, null, true).html, style:['small', 'gray'],margin:0}
+      ]},
+      {text:(schema.description?schema.description:''), style:['small'],margin:[0,2,0,0]},
     ];
   }
   return obj;
