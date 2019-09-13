@@ -325,7 +325,10 @@ function getParameterTableDef(parameters, paramType, tableLayout, localize){
             ( paramSchema.pattern ? { text: `${localize.pattern}: ${paramSchema.pattern}`, style:['small','gray']}:''),
           ]
         },
-        { text:param.description, style:['small'],margin:[0,2,0,0]},
+        {stack: [
+            { text:param.description, style:['small'],margin:[0,2,0,0]},
+            { text: param.example ? `Example: ${param.example}` : '', style: ['small', 'gray'],margin:[0,2,0,0]}
+          ]}
       ]);
     });
   }

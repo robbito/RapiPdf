@@ -216,7 +216,10 @@ export function schemaToPdf (schema, name, colSpan = 3) {
       obj = [ 
         {text:name, style:['small', 'mono']},
         {text:(schema.type ? (schema.type + '{ }') :''), style:['small', 'mono']},
-        {text:(schema.description?schema.description:''), style:['small']}
+        {stack: [
+            {text: (schema.description?schema.description:''), style:['small']},
+            {text: (schema.example ? `Example: ${schema.example}` : ''), style:['small', 'gray']}
+         ]}
       ];
     }
   }
@@ -282,7 +285,10 @@ export function schemaToPdf (schema, name, colSpan = 3) {
           ]
           ,margin:0
         },
-        {text:(schema.description?schema.description:''), style:['small'],margin:[0,2,0,0]}
+        {stack: [
+            {text: (schema.description?schema.description:''), style:['small'],margin:[0,2,0,0]},
+            {text: (schema.example ? `Example: ${schema.example}` : ''), style:['small', 'gray'],margin:[0,2,0,0]}
+          ]}
       ];
     }
 
@@ -295,7 +301,10 @@ export function schemaToPdf (schema, name, colSpan = 3) {
           {text:(schema.type ? schema.type:''), style:['small', 'mono'],margin:0},
           {text: getTypeInfo(schema, null, true).html, style:['small', 'gray'],margin:0}
       ]},
-      {text:(schema.description?schema.description:''), style:['small'],margin:[0,2,0,0]},
+      {stack: [
+          {text: (schema.description?schema.description:''), style:['small'],margin:[0,2,0,0]},
+          {text: (schema.example ? `Example: ${schema.example}` : ''), style:['small', 'gray'],margin:[0,2,0,0]}
+      ]}
     ];
   }
   return obj;
