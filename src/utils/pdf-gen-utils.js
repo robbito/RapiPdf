@@ -43,9 +43,9 @@ export function getInfoDef(spec, bookTitle, localize){
     }
 
     content = [
-      {text: bookTitle ? bookTitle:localize.apiReference, style:['h2', 'primary','right', 'b', 'topMargin1']},
-      (spec.info.title ? {text:spec.info.title, style:['title', 'right']} : ''),
-      (spec.info.version ? {text:`${localize.apiVersion}: ${spec.info.version}`, style:['p','b', 'right', 'alternate']} : ''),
+      {text: bookTitle ? bookTitle:localize.apiReference, style:['h2', 'primary','left', 'b', 'topMargin1']},
+      (spec.info.title ? {text:spec.info.title, style:['title', 'left']} : ''),
+      (spec.info.version ? {text:`${localize.apiVersion}: ${spec.info.version}`, style:['p','b', 'left', 'alternate']} : ''),
       specInfDescrMarkDef,
       ...contactDef,
       {text:'', pageBreak:'after'}
@@ -323,11 +323,12 @@ function getParameterTableDef(parameters, paramType, tableLayout, localize){
               ]} : ''
             ),
             ( paramSchema.pattern ? { text: `${localize.pattern}: ${paramSchema.pattern}`, style:['small','gray']}:''),
+            (paramSchema.default ? { text: `Default: ${paramSchema.default}` , style: ['small', 'gray']} : '')
           ]
         },
         {stack: [
             { text:param.description, style:['small'],margin:[0,2,0,0]},
-            { text: param.example ? `Example: ${param.example}` : '', style: ['small', 'gray'],margin:[0,2,0,0]}
+            { text: param.example ? `Example: ${param.example}` : '', style: ['small', 'gray'],margin:[0,2,0,0]},
           ]}
       ]);
     });

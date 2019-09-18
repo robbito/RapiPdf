@@ -27,7 +27,7 @@ export function getTypeInfo(schema, overrideAttributes=null, skipType = false){
     readOnly  : schema.readOnly ? 'read-only' : '',
     writeOnly : schema.writeOnly ? 'write-only' : '',
     depricated: schema.deprecated ? 'depricated' : '',
-    default   : schema.default === 0 ? '0 ': (schema.default ? schema.default : ''),
+    default   : schema.default === 0 ? '0': (schema.default === '' ? "''" : (schema.default || '')),
     type      : '',
     arrayType : '',
     allowedValues:'',
@@ -115,16 +115,20 @@ export function getTypeInfo(schema, overrideAttributes=null, skipType = false){
     html = html + `depricated`;
   }
   if (returnObj.constrain){
-    html = html + `\u00a0${returnObj.constrain}`;
+    html = addLine(html,`${returnObj.constrain}`);
   }
   if (returnObj.format){
-    html = html + `\u00a0${returnObj.format}`;
+    html = addLine(html, `${returnObj.format}`);
   }
   if (returnObj.pattern){
-    html = html + `\u00a0${returnObj.pattern}`;
+    html = addLine(html, `${returnObj.pattern}`);
   }
   returnObj.html = html;
   return returnObj;
+}
+
+function addLine(html, line) {
+  return (html ? html + "\n" : "") + line;
 }
 
 /* For changing JSON-Schema to a Object Model that can be represnted in a tree-view */ 

@@ -141,7 +141,7 @@ export default async function ProcessSpec(specUrl) {
   securitySchemes = (openApiSpec.components? openApiSpec.components.securitySchemes:{});
   if (openApiSpec.servers){
     openApiSpec.servers.map(function(v){
-      if (v.url && v.url.substr(0,1) === "/"){
+      if (typeof specUrl === "string" && v.url && v.url.substr(0,1) === "/"){
         let paths = specUrl.split("/");
         v.url = paths[0]+"//"+paths[2]+v.url;
       }
